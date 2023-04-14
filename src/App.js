@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom/cjs/react-router-dom.min';
+import { Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import Login from './pages/Login';
 import Search from './pages/Search';
 import Album from './pages/Album';
@@ -14,14 +14,14 @@ class App extends React.Component {
       <div>
         <p>TrybeTunes!</p>
         <NotFound />
-        <switch>
-          <Route path="/" component={ Login } />
+        <Switch>
+          <Route exact path="/" component={ Login } />
           <Route path="/search" component={ Search } />
           <Route path="/album/:id" component={ Album } />
           <Route path="/favorites" component={ Favorites } />
-          <Route path="/profile" component={ Profile } />
           <Route path="/profile/edit" component={ ProfileEdit } />
-        </switch>
+          <Route path="/profile" component={ Profile } />
+        </Switch>
       </div>
     );
   }
