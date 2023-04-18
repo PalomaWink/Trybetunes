@@ -66,7 +66,7 @@ class Search extends Component {
         >
           Pesquisar
         </button>
-        {title}
+        <span>{title}</span>
         {(!isLoading && (
           resultAlbuns?.map((album) => (
             <div key={ album.collectionId }>
