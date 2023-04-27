@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../components/Loading';
+import { getUser, updateUser } from '../services/userAPI';
 
 class ProfileEdit extends Component {
   state = {
-    name: '',
+    inputName: '',
     email: '',
     description: '',
     image: '',
     loading: true,
+    isSaveButtonDisable: true,
   };
 
   componentDidMount() {
@@ -18,23 +20,53 @@ class ProfileEdit extends Component {
     }));
   }
 
+  handleValidation = ({ target: { name, value } }) => {
+    this.setState({
+      [name]: value,
+    });
+    this.setState(({
+      inputName,
+      email,
+      description,
+      image,
+    }) => {
+      const emailValidation = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
+      if (inputName.length > 0
+        && email.length > 0 && emailValidation
+        && description.length > 0
+        && image.length > 0) {
+        this.setState({
+          isSaveButtonDisable: false,
+        });
+      }
+    });
+  };
+
   handleClick = async () => {
-    const { nameField } = this.state;
+    const { inputName, email, description, image } = this.state;
     const { history } = this.props;
     // loading precisa ser true
     this.setState({
       loading: true,
     });
 
-    await createUser({
-      name: nameField,
-    });
-    // Preciso redirecionar para o search
-    history.push('/profile');
+    updateUser({
+      name: inputName,
+      email,
+      description,
+      image,
+    }).then(() => history.push('/profile'));
+    // Preciso redirecionar para o profile
   };
 
   render() {
-    const { name, email, description, image, loading } = this.state;
+    const { inputName,
+      email,
+      description,
+      image,
+      loading,
+      isSaveButtonDisable,
+    } = this.state;
     return (
       <div>
         <div data-testid="page-profile-edit">ProfileEdit</div>
@@ -42,22 +74,40 @@ class ProfileEdit extends Component {
           : (
             <div>
               <input
-                type="text"
                 data-testid="edit-input-name"
+                name="inputName"
                 placeholder="Escreva seu nome"
-                value={ name }
+                value={ inputName }
+                onChange={ this.handleValidation }
               />
               <input
                 type="email"
+                name="email"
                 data-testid="edit-input-email"
                 placeholder="Escreva seu e-mail"
                 value={ email }
+                onChange={ this.handleValidation }
               />
               <textarea
                 data-testid="edit-input-description"
+                name="description"
                 value={ description }
+                onChange={ this.handleValidation }
               />
-              
+              <input
+                data-testid="edit-input-image"
+                name="image"
+                type="text"
+                value={ image }
+                onChange={ this.handleValidation }
+              />
+              <button
+                data-testid="edit-button-save"
+                disabled={ isSaveButtonDisable }
+                onClick={ this.handleClick }
+              >
+                Salvar informações
+              </button>
             </div>
           )}
       </div>

@@ -28,7 +28,6 @@ class Search extends Component {
       searchField: '',
     });
     const searchAlbum = await searchAlbumsAPI(searchField);
-    console.log(searchAlbum);
     this.setState({
       isLoading: false,
       resultAlbuns: searchAlbum,
