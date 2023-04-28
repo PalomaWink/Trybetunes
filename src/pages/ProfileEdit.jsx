@@ -5,7 +5,7 @@ import { getUser, updateUser } from '../services/userAPI';
 
 class ProfileEdit extends Component {
   state = {
-    inputName: '',
+    name: '',
     email: '',
     description: '',
     image: '',
@@ -20,18 +20,18 @@ class ProfileEdit extends Component {
     }));
   }
 
-  handleValidation = ({ target: { name, value } }) => {
+  handleValidation = ({ target }) => {
     this.setState({
-      [name]: value,
+      [target.name]: target.value,
     });
     this.setState(({
-      inputName,
+      name,
       email,
       description,
       image,
     }) => {
       const emailValidation = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
-      if (inputName.length > 0
+      if (name.length > 0
         && email.length > 0 && emailValidation
         && description.length > 0
         && image.length > 0) {
@@ -43,7 +43,7 @@ class ProfileEdit extends Component {
   };
 
   handleClick = async () => {
-    const { inputName, email, description, image } = this.state;
+    const { name, email, description, image } = this.state;
     const { history } = this.props;
     // loading precisa ser true
     this.setState({
@@ -51,7 +51,7 @@ class ProfileEdit extends Component {
     });
 
     updateUser({
-      name: inputName,
+      name,
       email,
       description,
       image,
@@ -60,7 +60,7 @@ class ProfileEdit extends Component {
   };
 
   render() {
-    const { inputName,
+    const { name,
       email,
       description,
       image,
@@ -75,9 +75,10 @@ class ProfileEdit extends Component {
             <div>
               <input
                 data-testid="edit-input-name"
-                name="inputName"
+                type="text"
+                name="name"
                 placeholder="Escreva seu nome"
-                value={ inputName }
+                value={ name }
                 onChange={ this.handleValidation }
               />
               <input
@@ -106,7 +107,7 @@ class ProfileEdit extends Component {
                 disabled={ isSaveButtonDisable }
                 onClick={ this.handleClick }
               >
-                Salvar informações
+                Editar perfil
               </button>
             </div>
           )}
