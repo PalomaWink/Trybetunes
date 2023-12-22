@@ -1,6 +1,6 @@
 # TrybeTunes
 
-TrybeTunes é uma aplicação web que permite aos usuários reproduzir músicas de diversas bandas e artistas, criar uma lista de músicas favoritas e editar o perfil do usuário logado. Para isso foi utilizada a API do ITunes, dispoível em https://developer.apple.com/documentation/applemusicapi/.
+TrybeTunes é uma aplicação web que permite aos usuários reproduzir músicas de diversas bandas e artistas, criar uma lista de músicas favoritas e editar o perfil do usuário logado.
 
 ## Funcionalidades
 
@@ -47,6 +47,10 @@ O projeto tem a seguinte estrutura de diretórios e arquivos:
         searchAlbumsAPI.js
         userAPI.js
     setupTests.js
+
+## API
+
+Este projeto utiliza a [API do ITunes](https://developer.apple.com/documentation/applemusicapi/).
 
 ## Como Executar
 
